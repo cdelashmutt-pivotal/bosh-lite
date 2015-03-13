@@ -37,14 +37,11 @@ publish_to_vagrant_cloud(){
     -d access_token="$VAGRANT_CLOUD_ACCESS_TOKEN"
 }
 
-update_vagrant_file() {
+commit_vagrant_file_version() {
   sed -i'' -e "s/override.vm.box_version = '.\{4\}'/override.vm.box_version = '$box_version'/" Vagrantfile
   git diff
   git add Vagrantfile
   git commit -m "Update box version to $box_version"
-  git remote rm origin
-  git remote add origin 'git@github.com:cloudfoundry/bosh-lite.git'
-  git push origin HEAD:develop
 }
 
 upload_box_to_vagrant_cloud() {
@@ -93,7 +90,7 @@ main() {
 
   publish_to_s3
   publish_to_vagrant_cloud
-  update_vagrant_file
+  commit_vagrant_file_version
 }
 
 main
