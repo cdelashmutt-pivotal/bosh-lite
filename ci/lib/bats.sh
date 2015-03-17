@@ -17,6 +17,7 @@ run_bats() {
 
   cd bosh
 
+  rm -rf ./.bundle
   bundle install
 
   # the director may not be running yet, so allow one failure
