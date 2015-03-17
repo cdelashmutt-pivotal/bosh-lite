@@ -2,10 +2,12 @@
 
 set -e -x
 
+source $(dirname $0)/lib/box.sh
+
 box_version=$(box_version)
 
 create_vagrant_cloud_version(){
-  result=`curl https://vagrantcloud.com/api/v1/box/cloudfoundry/bosh-lite/versions \
+  result=`curl https://vagrantcloud.com/api/v1/box/${VAGRANT_CLOUD_BOX_NAME}/versions \
           -X POST \
           -d version[version]="$box_version" \
           -d access_token="$VAGRANT_CLOUD_ACCESS_TOKEN"`
@@ -32,7 +34,7 @@ publish_to_vagrant_cloud(){
     upload_box_to_vagrant_cloud $provider $provider $version_id
   done
 
-  curl https://vagrantcloud.com/api/v1/box/cloudfoundry/bosh-lite/version/${version_id}/release \
+  curl https://vagrantcloud.com/api/v1/box/${VAGRANT_CLOUD_BOX_NAME}/version/${version_id}/release \
     -X PUT \
     -d access_token="$VAGRANT_CLOUD_ACCESS_TOKEN"
 }
@@ -49,7 +51,7 @@ upload_box_to_vagrant_cloud() {
   box_type=$2
   version_id=$3
 
-  curl https://vagrantcloud.com/api/v1/box/cloudfoundry/bosh-lite/version/${version_id}/providers \
+  curl https://vagrantcloud.com/api/v1/box/${VAGRANT_CLOUD_BOX_NAME}/version/${version_id}/providers \
     -X POST \
     -d provider[name]="$provider" \
     -d provider[url]="http://d2u2rxhdayhid5.cloudfront.net/bosh-lite-$box_type-ubuntu-trusty-$box_version.box" \
@@ -75,6 +77,11 @@ main() {
 
   if [ -z "$VAGRANT_CLOUD_ACCESS_TOKEN" ]; then
     echo "VAGRANT_CLOUD_ACCESS_TOKEN needs to be set"
+    exit 1
+  fi
+
+  if [ -z "$VAGRANT_CLOUD_BOX_NAME" ]; then
+    echo "VAGRANT_CLOUD_BOX_NAME needs to be set"
     exit 1
   fi
 

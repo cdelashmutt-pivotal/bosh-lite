@@ -1,4 +1,6 @@
 ---
+platform: linux
+
 image: docker:///cppforlife/bosh-lite-ci
 
 inputs:
@@ -6,7 +8,10 @@ inputs:
 
 params:
   BOSH_LITE_CANDIDATE_BUILD_NUMBER:
+
   VAGRANT_CLOUD_ACCESS_TOKEN:
+  VAGRANT_CLOUD_BOX_NAME:
+
   PIPELINE_BUCKET:
   FINAL_BOXES_BUCKET:
 
