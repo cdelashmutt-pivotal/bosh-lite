@@ -4,6 +4,8 @@ set -e -x
 
 source $(dirname $0)/lib/box.sh
 
+cd bosh-lite
+
 box_version=$(box_version)
 
 create_vagrant_cloud_version(){
@@ -95,8 +97,8 @@ main() {
     exit 1
   fi
 
-  publish_to_s3
-  publish_to_vagrant_cloud
+  # publish_to_s3
+  # publish_to_vagrant_cloud
   commit_vagrant_file_version
 }
 
