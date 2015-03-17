@@ -43,7 +43,7 @@ publish_to_vagrant_cloud(){
 
 commit_vagrant_file_version() {
   sed -i'' -e "s/override.vm.box_version = '.\{4\}'/override.vm.box_version = '$box_version'/" Vagrantfile
-  git diff --exit-code
+  git diff | cat
   git add Vagrantfile
   git commit -m "Update box version to $box_version"
 }
