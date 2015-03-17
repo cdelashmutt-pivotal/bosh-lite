@@ -45,6 +45,8 @@ commit_vagrant_file_version() {
   sed -i'' -e "s/override.vm.box_version = '.\{4\}'/override.vm.box_version = '$box_version'/" Vagrantfile
   git diff | cat
   git add Vagrantfile
+  git config --global user.email "cf-bosh-eng@pivotal.io"
+  git config --global user.name "Jenkins CI"
   git commit -m "Update box version to $box_version"
 }
 
