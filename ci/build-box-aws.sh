@@ -8,6 +8,9 @@ cd bosh-lite
 
 box_version=$(box_version)
 
+export AWS_ACCESS_KEY_ID=$BOSH_AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$BOSH_AWS_SECRET_ACCESS_KEY
+
 ./bin/build-aws \
   $BOSH_RELEASE_VERSION \
   $WARDEN_RELEASE_VERSION \
